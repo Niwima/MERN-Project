@@ -75,3 +75,41 @@ html, body, .app, .cities {
 .very-rounded-left {
   border-radius:20px 0px 0px 20px;
 }
+
+.city-button{
+  position: relative;
+  padding: 2px;
+  height: 15vh;
+  width: 100%;
+  border-radius: 5em;
+  overflow: hidden;
+}
+.city-image{
+  height: 15vh;
+  width: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  
+}
+
+.cityNameAndCountry {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bg-darkish {
+  padding: .2em;
+  background-color: rgba(10, 10, 10, .5);
+  border-radius: 15px 15px 15px 15px;
+}
+
+.searchbar {
+  width: 30%;
+}
