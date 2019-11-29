@@ -10,9 +10,9 @@ class Navbar extends Component {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div className="navbar-nav">
-                    <a href= "/"className="nav-item nav-link active " >Home <span className="sr-only">(current)</span></a>
+                    <a href= "/ "className="nav-item nav-link" >Landing Page</a>
                     <a href= "/cities"className="nav-item nav-link " >Cities</a>
-                    <a href= "/"className="nav-item nav-link " >Another Thing</a>
+                    <a href= "/createaccount"className="nav-item nav-link " >New Account</a>
                   </div>
                 </div>
               </nav>

@@ -1,75 +1,90 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {getCities, selectCity} from '../store/actions/cityActions' ;
+
 import Navbar from './Navbar'
 
 class Cities extends Component {
-    state= {
-        allCities: [],
+    state = {
         filteredCities: [],
-    };
+        searchTerm: ""
+    }
+
+    componentDidMount(){
+        this.props.getCities()
+    }
+
+    sortCities = (e) => {
+        let value = e.target.value
+        let sortedCities;
+            if (this.state.filteredCities.length === 0) {
+                sortedCities = this.props.cities
+                
+            }else {
+                sortedCities = this.state.filteredCities
+            }
+        sortedCities.sort((a, b) => (a[value] > b[value]) ? 1 : -1)
+        this.setState({
+            filteredCities: sortedCities
+        })
+    }
     filterCities= (e) => {
         let filteredCities;
-        console.log(e.target.value)
         if (e.target.value === ""){
-            filteredCities = this.state.allCities;
-            console.log(filteredCities)
+            this.setState({
+                searchTerm: e.target.value
+            })
+            filteredCities = this.props.cities;
         }else{
-        filteredCities = this.state.allCities.filter(city => 
+        filteredCities = this.props.cities.filter(city => 
             city.name.toUpperCase().startsWith( e.target.value.toUpperCase() ) || 
-            city.name.toUpperCase().includes( " " + e.target.value.toUpperCase() )
+            city.name.toUpperCase().includes( " " + e.target.value.toUpperCase() ) ||
+            city.country.toUpperCase().startsWith( e.target.value.toUpperCase() ) || 
+            city.country.toUpperCase().includes( " " + e.target.value.toUpperCase() )
             );
         }
+            filteredCities.sort((a, b) => (a.name > b.name) ? 1 : -1)
             this.setState({
-                filteredCities: filteredCities
-            })
-    }
-    fetchCities= () => {
-        this.setState({...this.state, isFetching: true})
-    fetch("http://localhost:5000/cities/all")
-    .then(response => response.json())
-      .then(result => {
-            this.setState({
-            allCities: result, 
-            isFetching: false,
-            filteredCities: result
+                filteredCities: filteredCities,
+                searchTerm: e.target.value
         })
-    })
-      .catch(e => console.log(e));
-      
-    };
+    }
+
+    goToItinerariesPage = (city) => {
+        this.props.selectCity(city.name)
+        console.log(this.props.selectedCity)
+        this.props.history.push("/itineraries")
+    }
     render() {
-        const citiesElement = this.state.filteredCities.map(city => {
+        let citiesElementSource
+        let citiesElement
+        if (this.state.filteredCities.length === 0 && this.state.searchTerm === "") {
+            citiesElementSource = this.props.cities
+        }else {
+            citiesElementSource = this.state.filteredCities
+        }
+        citiesElement = citiesElementSource.map(city => {
             return (
-                <div className="city-button" key = {city._id}>
-                    <img className="city-image" src={city.image} alt=""/> 
-                    <div className="cityNameAndCountry">
-                        <div className="text-light bg-darkish small font-weight-bold">{city.name}</div> 
-                        <div className="text-light bg-darkish small font-weight-bold">{city.country}</div>
-                    </div>
+                <div onClick={() => {this.goToItinerariesPage(city)}} className="city-button" key = {city._id}>
+                        <img  className="city-image" src = {city.image} alt={city.name} />
+                        <div className="cityNameAndCountry">
+                            <div className="text-light bg-darkish small font-weight-bold">{city.name}</div>
+                            <div className="text-light bg-darkish small font-weight-bold">{city.country}</div>
+                        </div>
                 </div>
             )});
-        return (
-            <div className="cities container-fluid">
+            return (
+                <div className="cities container-fluid">
                 <div className = "sticky-top">
                     <Navbar />
                     <div className="d-flex justify-content-between">
-                        <select name="sort" id="sortSelector">
-                            <option value="Name">Name</option>
-                            <option value="Rating">Rating</option>
-                            <option value="Cost">Cost</option>
-                            <option value="Population">Population</option>
-                            <option value="Safety">Safety</option>
-                            <option value="Cuisine">Cuisine</option>
-                            <option value="Equality">Equality</option>
-                            <option value="Weather">Weather</option>
-                            <option value="Secret Wars">Secret Wars</option>
-                            <option value="Magic">Magic</option>
-                            <option value="Monsters">Monsters</option>
-                            <option value="Absurdity">Absurdity</option>
-                            <option value="Pet-Friendly">Pet-Friendly</option>
-                            <option value="Ricks">Ricks</option>
-                            <option value="Distopic">Distopic</option>
+                        <select onChange={this.sortCities} name="sort" id="sortSelector">
+                            <option value="name">Name</option>
+                            <option value="country">Country</option>
                         </select>
+
                         <input className="searchbar" type="text" placeholder = "Search" onChange= {this.filterCities} />
+
                         <select name="regions" id="regionSelector">
                             <option value="ALL">All Regions</option>
                             <option value="USA">Americas</option>
@@ -80,12 +95,28 @@ class Cities extends Component {
                         </select>
                     </div>
                 </div>
-               {citiesElement}
+
+            <div className="container-fluid">
+                {citiesElement}
             </div>
-        );
+
+            </div>
+            );
     }
-    componentDidMount() {
-        this.fetchCities()
-      }
 }
-export default Cities;
+
+const mapStateToProps = (state) => {
+    return {
+        cities: state.cities.cities,
+        selectedCity: state.cities.selectedCity
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getCities: () => dispatch (getCities()),
+        selectCity: (city) => dispatch (selectCity(city))
+    }
+}
+
+export default  connect(mapStateToProps, mapDispatchToProps) (Cities)

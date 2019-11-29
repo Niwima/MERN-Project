@@ -9,6 +9,16 @@ router.get('/test', (req, res) => {
     res.send({ msg: 'Cities test route.' })
 });
 
+router.get('/city/:name', (req, res) => {
+    let cityRequested = req.params.name
+    cityModel.findOne({name:cityRequested})
+        .then(city => {
+            res.send(city)
+        })
+        .catch(err => console.log(err));
+    }
+);
+
 router.get('/all',
     (req, res) => {
     cityModel.find({})
@@ -25,12 +35,26 @@ router.post('/', (req, res) => {
         country: req.body.country,
         image: req.body.image
     })
-    console.log(newCity)
-
-    newCity.save()
-      .then(city => {
-        res.send(city)
-      })
+    
+    cityModel.find({})
+        .then(files => {
+            let isUnique = true;
+            for (i=0; i < files.length; i++) {
+                if (files[i].name === newCity.name && files[i].country === newCity.country) {
+                    isUnique = false;
+                    console.log( "newCity name", newCity.name)
+                    console.log( "duplicate city name", files[i].name)
+                }
+            }
+            if (isUnique == true){
+                newCity.save()
+                    .then(city => {
+                        res.send(city)
+                    });
+            }else {
+                console.log("This city is already in the database.")
+            }
+        })
       .catch(err => {
       res.status(500).send("Server error")}) 
 });

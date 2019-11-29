@@ -27,7 +27,7 @@
   color: #09d3ac;
 }
 
-html, body, .app, .cities {
+html, body, .app {
   height: 100vh;
 }
 
@@ -81,7 +81,7 @@ html, body, .app, .cities {
   padding: 2px;
   height: 15vh;
   width: 100%;
-  border-radius: 5em;
+  border-radius: 1em;
   overflow: hidden;
 }
 .city-image{
@@ -90,6 +90,39 @@ html, body, .app, .cities {
   object-fit: cover;
   object-position: 50% 50%;
   
+}
+
+.activity-image{
+  height: 15vh;
+  width: 50%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.new-city-button {
+  position: relative;
+  padding: 2px;
+  width: 100%;
+  border: black solid 2px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.new-city-image {
+  height: 15vh;
+  width: auto;
+}
+
+.new-city-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cityNameAndCountry {
@@ -111,5 +144,5 @@ html, body, .app, .cities {
 }
 
 .searchbar {
-  width: 30%;
+  width: 100%;
 }
