@@ -4,6 +4,8 @@ const router = express.Router();
 
 const cityModel = require('../model/cityModel');
 
+const passport = require('passport');
+
 router.get('/test', (req, res) => {
     console.log(req)
     res.send({ msg: 'Cities test route.' })
@@ -18,7 +20,9 @@ router.get('/city/:name', (req, res) => {
         .catch(err => console.log(err));
     }
 );
+//passport.authenticate("jwt", { session: false }) makes it authorized/unauthorized
 
+//get all cities
 router.get('/all',
     (req, res) => {
     cityModel.find({})
@@ -28,14 +32,12 @@ router.get('/all',
         .catch(err => console.log(err));
     }
 );
-
 router.post('/', (req, res) => {
     const newCity = new cityModel({
         name: req.body.name,
         country: req.body.country,
         image: req.body.image
     })
-    
     cityModel.find({})
         .then(files => {
             let isUnique = true;
@@ -58,6 +60,4 @@ router.post('/', (req, res) => {
       .catch(err => {
       res.status(500).send("Server error")}) 
 });
-
-
 module.exports = router;

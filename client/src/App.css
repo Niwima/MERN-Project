@@ -146,3 +146,9 @@ html, body, .app {
 .searchbar {
   width: 100%;
 }
+
+.userImage {
+  object-fit: cover;
+  height: 15vw;
+  width: 15vw;
+}
