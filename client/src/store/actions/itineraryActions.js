@@ -1,6 +1,10 @@
-export const getItineraries = (cityname) => dispatch => {
+export const getItineraries = (cityname, token) => dispatch => {
 
-    fetch("http://localhost:5000/itineraries/" + cityname)
+    fetch("http://localhost:5000/itineraries/" + cityname, {
+      headers:{
+      "Content-Type": "application/json",
+      "Authorization": "bearer " + token
+    }})
     .then(response => response.json())
       .then(result => {
             dispatch({
@@ -8,5 +12,5 @@ export const getItineraries = (cityname) => dispatch => {
                 payload: result.sort((a, b) => (a.title > b.title) ? 1 : -1)
             })
         })
-      .catch(e => console.log(e));
+      .catch(e => window.location.href = "http://localhost:3000/");
 }

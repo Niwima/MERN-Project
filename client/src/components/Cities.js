@@ -6,22 +6,39 @@ import Navbar from './Navbar'
 
 class Cities extends Component {
     state = {
+        timer: 1,
         filteredCities: [],
         searchTerm: ""
     }
-
     componentDidMount(){
-        this.props.getCities()
+        this.setState({timer: 0})
+        this.authAndGetCities()
     }
-
+    authAndGetCities = (e) => {
+        let token = sessionStorage.getItem('encryptedToken');
+        if (token === null) {
+            let timer = this.state.timer + 1
+            this.setState({
+                timer: timer
+            })
+            console.log(this.state.timer)
+            if(this.state.timer > 15){
+                window.location.href = "http://localhost:3000/";
+            }else{
+                setTimeout(this.authAndGetCities, 300);
+            }
+        } else {
+            this.props.getCities(token);
+        }
+    }
     sortCities = (e) => {
-        let value = e.target.value
+        let value = e.target.value;
         let sortedCities;
             if (this.state.filteredCities.length === 0) {
-                sortedCities = this.props.cities
+                sortedCities = this.props.cities;
                 
             }else {
-                sortedCities = this.state.filteredCities
+                sortedCities = this.state.filteredCities;
             }
         sortedCities.sort((a, b) => (a[value] > b[value]) ? 1 : -1)
         this.setState({
@@ -52,12 +69,11 @@ class Cities extends Component {
 
     goToItinerariesPage = (city) => {
         this.props.selectCity(city.name)
-        console.log(this.props.selectedCity)
         this.props.history.push("/itineraries")
     }
     render() {
-        let citiesElementSource
-        let citiesElement
+        let citiesElementSource;
+        let citiesElement;
         if (this.state.filteredCities.length === 0 && this.state.searchTerm === "") {
             citiesElementSource = this.props.cities
         }else {
@@ -86,12 +102,7 @@ class Cities extends Component {
                         <input className="searchbar" type="text" placeholder = "Search" onChange= {this.filterCities} />
 
                         <select name="regions" id="regionSelector">
-                            <option value="ALL">All Regions</option>
-                            <option value="USA">Americas</option>
-                            <option value="Europe">Europe</option>
-                            <option value="Africa">Africa</option>
-                            <option value="Space">Space</option>
-                            <option value="Other Worlds">Other</option>
+                            <option value="Fictional">Fictional</option>
                         </select>
                     </div>
                 </div>
@@ -114,7 +125,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getCities: () => dispatch (getCities()),
+        getCities: (token) => dispatch (getCities(token)),
         selectCity: (city) => dispatch (selectCity(city))
     }
 }

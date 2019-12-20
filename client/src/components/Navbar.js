@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import UserImage from './UserImage'
+import Logout from "./Logout"
 class Navbar extends Component {
   state = {
     token: {
@@ -19,7 +20,6 @@ class Navbar extends Component {
       },
       landingPage: "/landing/" + storedToken
     })
-    console.log(token)
 }
 
   render() {
@@ -35,7 +35,7 @@ class Navbar extends Component {
               <a href= {this.state.landingPage} className="nav-item nav-link" >Landing Page</a>
               <a href= "/cities"className="nav-item nav-link " >Cities</a>
               <a href= "/createaccount"className="nav-item nav-link " >New Account</a>
-              <a href= "/"className="nav-item nav-link " >Login</a>
+              <Logout className="nav-item nav-link "/>
             </div>
           </div>
         </nav>

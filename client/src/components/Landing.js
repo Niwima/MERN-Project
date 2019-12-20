@@ -14,15 +14,10 @@ class Landing extends Component {
         try{
             token = JSON.stringify(jwt_decode(encryptedToken))
         }catch(error) {
-            window.location.href = "http://localhost:3000/login"
+            window.location.href = "http://localhost:3000/"
         }
-        
-        console.log("match.params", encryptedToken)
-        console.log ("decrypted", token)
         sessionStorage.setItem('encryptedToken', encryptedToken)
         sessionStorage.setItem('token', token);
-        let storedToken = JSON.parse(sessionStorage.getItem('token'))
-        console.log('token', storedToken)
     }
     render() {
         return (

@@ -6,8 +6,12 @@ const itineraryModel = require('../model/itineraryModel');
 
 const cityModel = require('../model/cityModel');
 
+const passport = require('passport');
 
-router.get('/:name', (req, res) => {
+
+router.get('/:name', 
+    passport.authenticate('jwt',{session: false}),
+    (req, res) => {
     let cityRequested = req.params.name
     itineraryModel.find({city:cityRequested})
         .then(itineraries => {

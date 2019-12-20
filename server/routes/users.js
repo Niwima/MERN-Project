@@ -18,7 +18,6 @@ router.post('/newUser',
         }
     const {name, email, password} = req.body
     if (!name || !email || !password){
-        console.log("Please enter all fields")
         return res.status(400).json({msg: 'Please enter all fields'})
     }
     const newUser = new userModel({
@@ -65,7 +64,6 @@ router.post('/newUser',
                 })
                 return res.status(200).json({msg: 'Account Created'});
             }else {
-                console.log("An account linked to this email address already exists")
                 return res.status(400).json({ msg: 'An account linked to this email address already exists'})
             }
         })

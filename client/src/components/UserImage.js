@@ -11,7 +11,7 @@ componentDidMount(){
 }
 getTokenInCache = (e) => {
     let token = JSON.parse(sessionStorage.getItem('token'))
-    if (token === null) {
+    if (token === null || token === undefined) {
         setTimeout(this.getTokenInCache, 300)
     } else {
         this.setState({
@@ -25,7 +25,7 @@ getTokenInCache = (e) => {
             <div>
                 <img className="userImage rounded-circle" src={this.state.token.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://icon-library.net/images/no-user-image-icon/no-user-image-icon-18.jpg"}} alt="none"/>
             </div>
-            )
+        )
     }
 }
 export default UserImage;

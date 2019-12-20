@@ -25,7 +25,6 @@ router.post('/', (req, res) => {
                 const payload = {
                         id: user.id,
                         name: user.name,
-                        email: user.email,
                         image: user.image
             };
                 jwt.sign(
@@ -47,7 +46,6 @@ router.post('/', (req, res) => {
                             user: {
                                 id: user.id,
                                 name: user.name,
-                                email: user.email,
                                 image: user.image
                             }
                         });
@@ -72,14 +70,13 @@ passport.authenticate('google', { scope: ['profile', 'email'] })
 
 
 router.get('/redirect',  
-passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }),
+passport.authenticate('google', { failureRedirect: 'http://localhost:3000/' }),
 function(req, res) {
 userModel.findById(req.user.id)
     .then(user => {
         const payload = {
                 id: user.id,
                 name: user.name,
-                email: user.email,
                 image: user.image
         };
         jwt.sign(

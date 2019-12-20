@@ -6,12 +6,20 @@ import Navbar from './Navbar'
 
 class Itineraries extends Component {
     componentDidMount() {
-            this.props.getItineraries(this.props.selectedCity)
-            if (this.props.selectedCity === "No city selected, returning to cities..."){
-                window.location.href = "/cities"
-            }
+        if (this.props.selectedCity === "No city selected, returning to cities..."){
+            window.location.href = "/cities"
+        }
+        this.authAndGetActivities()
     }
    
+    authAndGetActivities = (e) => {
+        let token = sessionStorage.getItem('encryptedToken')
+        if (token === null) {
+            setTimeout(this.authAndGetActivities, 300)
+        } else {
+            this.props.getItineraries(this.props.selectedCity, token)
+        }
+    }
     
     render () {
         let itineraries = this.props.itineraries
@@ -34,7 +42,7 @@ class Itineraries extends Component {
                                     <p>Price: {itinerary.price}</p>
                                 </div>
                                     <p>{itinerary.hashtags}</p>
-                            <div>
+                            <div className = "sidescroll">
                                 {activities}
                             </div>
                         </div>
@@ -65,7 +73,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getItineraries: (city) => dispatch (getItineraries(city)),
+        getItineraries: (city, token) => dispatch (getItineraries(city, token)),
     }
 }
 export default  connect(mapStateToProps, mapDispatchToProps) (Itineraries)

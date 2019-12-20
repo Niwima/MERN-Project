@@ -32,11 +32,8 @@ module.exports = passport.use(new GoogleStrategy({
        userModel.findOne({googleId: profile.id})
         .then(user => {
             if (user) {
-                console.log("extant user!", user)
                 return done(null, user);
             }else{
-                console.log('hola gonzlao')
-                console.log(profile.picture)
                 const newUser = new userModel({
                     name: profile.displayName,
                     googleId: profile.id,

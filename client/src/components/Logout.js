@@ -4,15 +4,13 @@ class Logout extends Component {
 
     handleClick = (e) => {
         sessionStorage.clear();
-        window.location.href = "http://localhost:3000/login"
+        window.location.href = "http://localhost:3000/"
     };
     render(){
         return(
             <div className= "container-fluid">
-                <div className="new-city-button"> 
-                    <div>
-                        <button onClick={this.handleClick} className="btn">Log Out</button>
-                    </div>
+                <div>
+                    <button onClick={this.handleClick} className="logout rounded">Log Out</button>
                 </div>
             </div>
         )

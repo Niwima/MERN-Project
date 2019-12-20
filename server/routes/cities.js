@@ -24,6 +24,7 @@ router.get('/city/:name', (req, res) => {
 
 //get all cities
 router.get('/all',
+    passport.authenticate('jwt',{session: false}),
     (req, res) => {
     cityModel.find({})
         .then(files => {

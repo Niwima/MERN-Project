@@ -35,12 +35,15 @@ class CreateAccount extends Component {
                 alert(data.msg)
             })
     };
+    
     render(){
         return(
-            <div className= "container-fluid">
+            <div className= "fullscreen d-flex flex-column justify-content-around container-fluid">
+                <div>
+                    <img className="new-city-image" src = {MytineraryLogo} alt="logo"/>
+                </div>
                 <div className="new-city-button">
-                    <img className="new-city-image" src = {MytineraryLogo} alt="logo"/> 
-                    <div>
+                    <div className = "card">
                         <form onSubmit={this.handleSubmit} className = "d-flex flex-column justify-content-between">
                             <h2 className="p-1">Create Account</h2>
                             <div className = "d-flex justify-content-between">
@@ -53,7 +56,7 @@ class CreateAccount extends Component {
                             </div>
                             <div className = "d-flex justify-content-between">
                                 <label>Password: </label>
-                                <input id= "password" type="text" onChange={this.handleChange}/>
+                                <input id= "password" type="password" onChange={this.handleChange}/>
                             </div>
                             <div className = "d-flex justify-content-between">
                                 <label>Image: </label>
@@ -61,8 +64,10 @@ class CreateAccount extends Component {
                             </div>
                             <button className = "btn-dark rounded m-2">Submit</button>
                         </form>
-                        <a href="/" >I Already Have An Account</a>
                     </div>
+                </div>
+                <div>
+                    <a href="/" >I Already Have An Account</a>
                 </div>
             </div>
         )

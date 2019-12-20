@@ -8,6 +8,10 @@
 .landing {
   height: 100%;
 }
+.fullscreen {
+  height: 100%;
+}
+
 .landing-logo {
   width: 100%;
   max-width: 500px;
@@ -39,8 +43,8 @@ html, body, .app {
 
 .carouselImageWrapper {
   display: inline-block;
-  height: 30vw;
-  width: 30vw;
+  height: 50vw;
+  width: 50vw;
   margin-left: 1vw;
   margin-right: 1vw;
   overflow: hidden;
@@ -53,8 +57,8 @@ html, body, .app {
 }
 
 .carouselImageCaption {
-  height: 30vw;
-  width: 30vw;
+  height: 50vw;
+  width: 50vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,12 +93,18 @@ html, body, .app {
   width: 100%;
   object-fit: cover;
   object-position: 50% 50%;
-  
+}
+.itinerary-image{
+  height: 5em;
+  width: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
 }
 
 .activity-image{
-  height: 15vh;
-  width: 50%;
+  height: 10em;
+  width: 10em;
+  border-radius: 50%;
   object-fit: cover;
   object-position: 50% 50%;
 }
@@ -103,8 +113,6 @@ html, body, .app {
   position: relative;
   padding: 2px;
   width: 100%;
-  border: black solid 2px;
-  border-radius: 20px;
   overflow: hidden;
 }
 
@@ -149,6 +157,10 @@ html, body, .app {
 
 .userImage {
   object-fit: cover;
-  height: 15vw;
-  width: 15vw;
+  height: 3em;
+  width: 3em;
+}
+
+.googleButton {
+  width: 100%;
 }
