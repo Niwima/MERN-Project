@@ -1,3 +1,5 @@
+//this component is not currently being used, may use its structure later
+
 import React, { Component } from 'react'
 import AsgardImage from "../images/city-images/asgard.jpg"
 import CamelotImage from "../images/city-images/camelot.jpg"

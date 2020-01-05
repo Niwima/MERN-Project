@@ -1,3 +1,4 @@
+//this component is not currently being used
 import React, { Component } from 'react';
 import MytineraryLogo from "../images/mytineraryLogo.png"
 import Navbar from './Navbar'
