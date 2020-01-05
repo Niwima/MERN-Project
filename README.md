@@ -1,2 +1,2 @@
 # MERN-Project
-A project for Ubiqum to make a full-stack mobile app using MERN.
+ a mobile travel app designed to help users plan trips to various cities. Utilizes user authentication and database manipulation using the MERN stack (MongoDB, Mongoose, Express, React, and Node.js)as well as Redux, JSON web token authentication, and Google OAuth.
